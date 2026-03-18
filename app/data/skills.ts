@@ -24,6 +24,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'CSS',        color: '#1572b6' },
       { name: 'JavaScript', color: '#c49a00' },
       { name: 'Vue.js',     color: '#42b883' },
+      { name: 'Nuxt.js',     color: '#004425' },
       { name: 'Bootstrap',  color: '#7952b3' },
       { name: 'TypeScript', color: '#3178c6' },
     ],
@@ -45,6 +46,9 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Linux',   color: '#c49a00' },
       { name: 'Vagrant', color: '#1563ff' },
       { name: 'Docker',  color: '#2496ed' },
+      { name: 'Claude code',  color: '#e624ed' },
+      { name: 'Chat GPT',  color: '#24ed99' },
+      { name: 'codex',  color: '#24cfed' },
     ],
   },
 ]

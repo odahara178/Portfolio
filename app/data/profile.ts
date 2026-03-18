@@ -22,7 +22,7 @@ export const profile = {
       'バックエンドエンジニア',
     ],
     /** 役職の下に表示するキャッチコピー */
-    tagline: 'PHP / Laravel・Vue.js を中心に、フロント〜バック幅広く対応できる Web エンジニア。',
+    tagline: 'Vue.js (主にNuxt.js)を中心に、フロント〜バック幅広く対応できる Web エンジニア。',
     ctaPrimary: 'Works を見る',
     ctaSecondary: 'Contact',
   },
@@ -31,8 +31,8 @@ export const profile = {
   about: {
     /** 自己紹介文（段落ごとに配列で追加可能） */
     bio: [
-      'PHP / Laravel を中心としたバックエンド開発と、Vue.js を使ったフロントエンド実装の両面を経験した Web エンジニアです。要件定義から設計・実装・テストまで一貫して担当してきました。',
-      '現在はより現代的なフロントエンド技術（Nuxt / TypeScript / Tailwind CSS）の習得に注力中です。',
+      'Vue.js / Nuxt.jsを使ったフロントエンド実装を経験しているWeb エンジニアです。バックエンド開発（PHP、SQL）にも知見はあります',
+      '現在は要件定義等の上流工程、知識としての資格取得（応用情報）、AI開発（Claude code）に興味があり学習中です',
     ],
     /** アバター下の数値ハイライト（color: 'cyan' | 'violet'） */
     stats: [
