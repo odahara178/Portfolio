@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const roles = ['Web エンジニア', 'Vue.js Developer', 'フロントエンドエンジニア', 'バックエンドエンジニア']
+import { profile } from '~/data/profile'
+
+const { roles, label, tagline, ctaPrimary, ctaSecondary } = profile.hero
+const { nameFirst, nameLast } = profile
+
 const displayed = ref('')
 const ri = ref(0)
 const ci = ref(0)
@@ -21,7 +25,6 @@ onMounted(() => setTimeout(tick, 700))
 
 <template>
   <section id="home" class="page-section hero">
-    <!-- Decorative blobs -->
     <div class="blob b1" />
     <div class="blob b2" />
 
@@ -31,31 +34,28 @@ onMounted(() => setTimeout(tick, 700))
       :enter="{ opacity: 1, y: 0, transition: { duration: 600 } }"
       class="hero-body"
     >
-      <p class="section-label">Portfolio</p>
+      <p class="section-label">{{ label }}</p>
 
       <h1 class="hero-name">
-        Hiromu <span class="text-accent">Odahara</span>
+        {{ nameFirst }} <span class="text-accent">{{ nameLast }}</span>
       </h1>
 
       <div class="hero-role-row">
         <span class="hero-role typing-cursor">{{ displayed }}</span>
       </div>
 
-      <p class="hero-sub">
-        PHP / Laravel・Vue.js を中心に、<br class="sp" />フロント〜バック幅広く対応できる Web エンジニア。
-      </p>
+      <p class="hero-sub">{{ tagline }}</p>
 
       <div class="hero-cta">
         <button class="btn btn-filled" @click="$el.ownerDocument.getElementById('works')?.scrollIntoView({behavior:'smooth'})">
-          Works を見る
+          {{ ctaPrimary }}
         </button>
         <button class="btn btn-ghost" @click="$el.ownerDocument.getElementById('contact')?.scrollIntoView({behavior:'smooth'})">
-          Contact
+          {{ ctaSecondary }}
         </button>
       </div>
     </div>
 
-    <!-- Scroll indicator -->
     <div class="scroll-ind">
       <span>scroll</span>
       <div class="scroll-line" />
@@ -116,9 +116,6 @@ onMounted(() => setTimeout(tick, 700))
   line-height: 1.7;
   margin: 0 0 2rem;
 }
-
-.sp { display: none; }
-@media (max-width: 480px) { .sp { display: inline; } }
 
 .hero-cta {
   display: flex;

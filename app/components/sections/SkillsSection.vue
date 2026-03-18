@@ -1,37 +1,5 @@
 <script setup lang="ts">
-const cats = [
-  {
-    title: 'Frontend',
-    icon: '🖥️',
-    skills: [
-      { name: 'HTML',       color: '#e34f26' },
-      { name: 'CSS',        color: '#1572b6' },
-      { name: 'JavaScript', color: '#c49a00' },
-      { name: 'Vue.js',     color: '#42b883' },
-      { name: 'Bootstrap',  color: '#7952b3' },
-      { name: 'TypeScript', color: '#3178c6' },
-    ],
-  },
-  {
-    title: 'Backend',
-    icon: '⚙️',
-    skills: [
-      { name: 'PHP',     color: '#777bb4' },
-      { name: 'Laravel', color: '#ff2d20' },
-      { name: 'MySQL',   color: '#4479a1' },
-    ],
-  },
-  {
-    title: 'Tools',
-    icon: '🛠️',
-    skills: [
-      { name: 'Git',    color: '#f05032' },
-      { name: 'Linux',  color: '#c49a00' },
-      { name: 'Vagrant', color: '#1563ff' },
-      { name: 'Docker', color: '#2496ed' },
-    ],
-  },
-]
+import { skillCategories } from '~/data/skills'
 </script>
 
 <template>
@@ -49,12 +17,7 @@ const cats = [
       </div>
 
       <div class="skills-grid">
-        <div
-          v-for="(cat, i) in cats"
-          :key="cat.title"
-          class="card cat-card"
-          :style="{ '--delay': `${i * 80}ms` }"
-        >
+        <div v-for="cat in skillCategories" :key="cat.title" class="card cat-card">
           <div class="cat-head">
             <span class="cat-icon">{{ cat.icon }}</span>
             <span class="cat-title">{{ cat.title }}</span>
@@ -92,9 +55,7 @@ const cats = [
   .skills-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-.cat-card {
-  padding: 1.25rem 1.25rem 1.5rem;
-}
+.cat-card { padding: 1.25rem 1.25rem 1.5rem; }
 
 .cat-head {
   display: flex;
@@ -106,16 +67,7 @@ const cats = [
 }
 
 .cat-icon { font-size: 1.1rem; line-height: 1; }
+.cat-title { font-size: 0.9rem; font-weight: 700; color: var(--text); }
 
-.cat-title {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
+.pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 </style>

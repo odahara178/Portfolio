@@ -1,6 +1,12 @@
+// ============================================================
+// スキル一覧データ
+// skills 配列に { name, color } を追加するだけで表示に反映されます
+// ============================================================
+
 export interface Skill {
   name: string
-  img: string
+  /** ドットに使うカラーコード */
+  color: string
 }
 
 export interface SkillCategory {
@@ -14,30 +20,31 @@ export const skillCategories: SkillCategory[] = [
     title: 'Frontend',
     icon: '🖥️',
     skills: [
-      { name: 'HTML', img: '/img/HTML.png' },
-      { name: 'CSS', img: '/img/CSS.png' },
-      { name: 'JavaScript', img: '/img/Javascript.png' },
-      { name: 'Vue.js', img: '/img/Vue.png' },
-      { name: 'Bootstrap', img: '/img/BootStrap.png' },
+      { name: 'HTML',       color: '#e34f26' },
+      { name: 'CSS',        color: '#1572b6' },
+      { name: 'JavaScript', color: '#c49a00' },
+      { name: 'Vue.js',     color: '#42b883' },
+      { name: 'Bootstrap',  color: '#7952b3' },
+      { name: 'TypeScript', color: '#3178c6' },
     ],
   },
   {
     title: 'Backend',
     icon: '⚙️',
     skills: [
-      { name: 'PHP', img: '/img/PHP.png' },
-      { name: 'Laravel', img: '/img/Laravel.png' },
-      { name: 'MySQL', img: '/img/MySQL.png' },
+      { name: 'PHP',     color: '#777bb4' },
+      { name: 'Laravel', color: '#ff2d20' },
+      { name: 'MySQL',   color: '#4479a1' },
     ],
   },
   {
     title: 'Tools',
     icon: '🛠️',
     skills: [
-      { name: 'Git', img: '/img/Git.png' },
-      { name: 'Linux', img: '/img/Linux.jpg' },
-      { name: 'Vagrant', img: '/img/Vagrant.png' },
-      { name: 'Docker', img: '/img/Docker.png' },
+      { name: 'Git',     color: '#f05032' },
+      { name: 'Linux',   color: '#c49a00' },
+      { name: 'Vagrant', color: '#1563ff' },
+      { name: 'Docker',  color: '#2496ed' },
     ],
   },
 ]
