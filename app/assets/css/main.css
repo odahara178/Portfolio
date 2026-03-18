@@ -1,0 +1,200 @@
+/* Google Fonts are loaded in nuxt.config.ts head */
+
+/* ── CSS Variables ─────────────────────────────────────── */
+:root {
+  --bg-start: #0f0f1a;
+  --bg-end: #1a1a2e;
+  --accent-cyan: #06b6d4;
+  --accent-violet: #7c3aed;
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+}
+
+/* ── Base ──────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ── Glass Morphism ────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-hover {
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(6, 182, 212, 0.3);
+  transform: translateY(-4px);
+}
+
+/* ── Text Gradient ─────────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glow Effects ──────────────────────────────────────── */
+.glow-cyan {
+  box-shadow:
+    0 0 20px rgba(6, 182, 212, 0.25),
+    0 0 60px rgba(6, 182, 212, 0.1);
+}
+
+.glow-violet {
+  box-shadow:
+    0 0 20px rgba(124, 58, 237, 0.25),
+    0 0 60px rgba(124, 58, 237, 0.1);
+}
+
+.glow-cyan-text {
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+/* ── Dot Grid Background ───────────────────────────────── */
+.dot-grid-bg {
+  background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Hero Typing Cursor ────────────────────────────────── */
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: var(--accent-cyan);
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── Section spacing ───────────────────────────────────── */
+.section {
+  padding: 5rem 0;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.section-line {
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+  border-radius: 9999px;
+  margin: 0 auto 3rem;
+}
+
+/* ── Tag Badge ─────────────────────────────────────────── */
+.tag-badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+/* ── Timeline ──────────────────────────────────────────── */
+.timeline-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-violet));
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -6px;
+  top: 1.5rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+}
+
+/* ── Nav ───────────────────────────────────────────────── */
+.nav-link-active {
+  color: var(--accent-cyan) !important;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-start);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-violet);
+  border-radius: 3px;
+}
+
+/* ── Button ────────────────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  color: white;
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: rgba(6, 182, 212, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ── Responsive helpers ────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: 3.5rem 0;
+  }
+  .section-line {
+    margin-bottom: 2rem;
+  }
+}
