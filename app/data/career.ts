@@ -11,15 +11,15 @@ export interface CareerEntry {
 
 export const careerEntries: CareerEntry[] = [
   {
-    period: '2020年 〜 現在',
-    company: '株式会社〇〇〇〇',
+    period: '2019年 〜 現在',
+    company: '株式会社エイト',
     role: 'Web エンジニア',
-    description: 'PHP / Laravel を中心としたバックエンド開発。Vue.js によるフロントエンド実装も担当。要件定義・設計・実装・テストまで一貫して携わる。',
+    description: 'SES業務に従事。Vue.js によるフロントエンド実装も担当。実装・テストを主に担当。長い現場では4年程参画させていただき、nuxt.jsとtypescriptを使用したチーム開発を行っていました。',
   },
   {
-    period: '2018年 〜 2020年',
-    company: '株式会社〇〇〇〇',
-    role: 'Web 制作',
-    description: 'HTML / CSS / JavaScript を使用したコーポレートサイト・LP 制作。Bootstrap を活用したレスポンシブデザインを担当。',
+    period: '2017年 〜 2019年',
+    company: '株式会社ポールトゥウィン',
+    role: 'デバッグ',
+    description: 'スマートフォンアプリ(ゲームやECサイト)のデバッグ業務を行っておりました。デバッグ業務を通して開発に興味を持ち、侍エンジニアにて学習し転職しています。',
   },
 ]
