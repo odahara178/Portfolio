@@ -1,25 +1,14 @@
 <script setup lang="ts">
-interface Skill {
-  name: string
-  color: string
-}
-
-interface SkillCategory {
-  title: string
-  icon: string
-  skills: Skill[]
-}
-
-const skillCategories: SkillCategory[] = [
+const cats = [
   {
     title: 'Frontend',
     icon: '🖥️',
     skills: [
-      { name: 'HTML', color: '#e34f26' },
-      { name: 'CSS', color: '#1572b6' },
-      { name: 'JavaScript', color: '#f7df1e' },
-      { name: 'Vue.js', color: '#42b883' },
-      { name: 'Bootstrap', color: '#7952b3' },
+      { name: 'HTML',       color: '#e34f26' },
+      { name: 'CSS',        color: '#1572b6' },
+      { name: 'JavaScript', color: '#c49a00' },
+      { name: 'Vue.js',     color: '#42b883' },
+      { name: 'Bootstrap',  color: '#7952b3' },
       { name: 'TypeScript', color: '#3178c6' },
     ],
   },
@@ -27,17 +16,17 @@ const skillCategories: SkillCategory[] = [
     title: 'Backend',
     icon: '⚙️',
     skills: [
-      { name: 'PHP', color: '#777bb4' },
+      { name: 'PHP',     color: '#777bb4' },
       { name: 'Laravel', color: '#ff2d20' },
-      { name: 'MySQL', color: '#4479a1' },
+      { name: 'MySQL',   color: '#4479a1' },
     ],
   },
   {
     title: 'Tools',
     icon: '🛠️',
     skills: [
-      { name: 'Git', color: '#f05032' },
-      { name: 'Linux', color: '#fcc624' },
+      { name: 'Git',    color: '#f05032' },
+      { name: 'Linux',  color: '#c49a00' },
       { name: 'Vagrant', color: '#1563ff' },
       { name: 'Docker', color: '#2496ed' },
     ],
@@ -46,38 +35,34 @@ const skillCategories: SkillCategory[] = [
 </script>
 
 <template>
-  <section id="skills" class="section">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-4">
-        <h2 class="section-title text-gradient">Skills</h2>
+  <section id="skills" class="page-section skills">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visible="{ opacity: 1, y: 0, transition: { duration: 500 } }"
+      class="skills-wrap"
+    >
+      <div class="skills-header">
+        <p class="section-label">Skills</p>
+        <h2 class="section-heading">Tech Stack</h2>
+        <div class="section-divider" />
       </div>
-      <div class="section-line" />
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="skills-grid">
         <div
-          v-for="(category, i) in skillCategories"
-          :key="category.title"
-          v-motion
-          :initial="{ opacity: 0, y: 30 }"
-          :visible="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 120 } }"
-          class="glass rounded-2xl p-6"
+          v-for="(cat, i) in cats"
+          :key="cat.title"
+          class="card cat-card"
+          :style="{ '--delay': `${i * 80}ms` }"
         >
-          <!-- Category header -->
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-2xl leading-none">{{ category.icon }}</span>
-            <h3 class="text-lg font-bold text-white">{{ category.title }}</h3>
+          <div class="cat-head">
+            <span class="cat-icon">{{ cat.icon }}</span>
+            <span class="cat-title">{{ cat.title }}</span>
           </div>
-
-          <!-- Skill pills -->
-          <div class="flex flex-wrap gap-2">
-            <span
-              v-for="skill in category.skills"
-              :key="skill.name"
-              class="skill-pill"
-              :style="{ '--dot-color': skill.color }"
-            >
-              <span class="skill-dot" />
-              {{ skill.name }}
+          <div class="pills">
+            <span v-for="s in cat.skills" :key="s.name" class="skill-pill">
+              <span class="skill-dot" :style="{ background: s.color }" />
+              {{ s.name }}
             </span>
           </div>
         </div>
@@ -87,32 +72,50 @@ const skillCategories: SkillCategory[] = [
 </template>
 
 <style scoped>
-.skill-pill {
-  display: inline-flex;
+.skills { background: var(--bg); }
+
+.skills-wrap {
+  width: 100%;
+  max-width: 900px;
+  padding: 0 1.25rem;
+}
+
+.skills-header { margin-bottom: 1.5rem; }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.875rem;
+}
+
+@media (min-width: 600px) {
+  .skills-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.cat-card {
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+.cat-head {
+  display: flex;
   align-items: center;
-  gap: 0.375rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
-  white-space: nowrap;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
 }
 
-.skill-pill:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(6, 182, 212, 0.4);
+.cat-icon { font-size: 1.1rem; line-height: 1; }
+
+.cat-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
 }
 
-.skill-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--dot-color, #06b6d4);
-  flex-shrink: 0;
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 </style>

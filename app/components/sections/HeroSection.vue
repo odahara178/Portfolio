@@ -1,199 +1,155 @@
 <script setup lang="ts">
-const roles = [
-  'Web エンジニア',
-  'フロントエンドエンジニア',
-  'バックエンドエンジニア',
-  'Vue.js Developer',
-]
+const roles = ['Web エンジニア', 'Vue.js Developer', 'フロントエンドエンジニア', 'バックエンドエンジニア']
+const displayed = ref('')
+const ri = ref(0)
+const ci = ref(0)
+const del = ref(false)
 
-const displayedRole = ref('')
-const roleIndex = ref(0)
-const charIndex = ref(0)
-const isDeleting = ref(false)
-
-function typeRole() {
-  const current = roles[roleIndex.value]!
-  if (!isDeleting.value) {
-    displayedRole.value = current.slice(0, charIndex.value + 1)
-    charIndex.value++
-    if (charIndex.value === current.length) {
-      isDeleting.value = true
-      setTimeout(typeRole, 1800)
-      return
-    }
+function tick() {
+  const cur = roles[ri.value]!
+  if (!del.value) {
+    displayed.value = cur.slice(0, ++ci.value)
+    if (ci.value === cur.length) { del.value = true; setTimeout(tick, 1800); return }
   } else {
-    displayedRole.value = current.slice(0, charIndex.value - 1)
-    charIndex.value--
-    if (charIndex.value === 0) {
-      isDeleting.value = false
-      roleIndex.value = (roleIndex.value + 1) % roles.length
-    }
+    displayed.value = cur.slice(0, --ci.value)
+    if (ci.value === 0) { del.value = false; ri.value = (ri.value + 1) % roles.length }
   }
-  setTimeout(typeRole, isDeleting.value ? 60 : 100)
+  setTimeout(tick, del.value ? 55 : 95)
 }
-
-onMounted(() => setTimeout(typeRole, 800))
+onMounted(() => setTimeout(tick, 700))
 </script>
 
 <template>
-  <section id="home" class="hero-section">
-    <!-- Glow blobs -->
-    <div class="blob blob-cyan" />
-    <div class="blob blob-violet" />
+  <section id="home" class="page-section hero">
+    <!-- Decorative blobs -->
+    <div class="blob b1" />
+    <div class="blob b2" />
 
-    <!-- Content -->
     <div
       v-motion
-      :initial="{ opacity: 0, y: 40 }"
-      :enter="{ opacity: 1, y: 0, transition: { duration: 700 } }"
-      class="hero-content"
+      :initial="{ opacity: 0, y: 30 }"
+      :enter="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+      class="hero-body"
     >
-      <p class="hero-eyebrow">Welcome to my Portfolio</p>
+      <p class="section-label">Portfolio</p>
 
       <h1 class="hero-name">
-        Hiromu<br />
-        <span class="text-gradient">Odahara</span>
+        Hiromu <span class="text-accent">Odahara</span>
       </h1>
 
-      <div class="hero-role-wrap">
-        <span class="hero-role typing-cursor">{{ displayedRole }}</span>
+      <div class="hero-role-row">
+        <span class="hero-role typing-cursor">{{ displayed }}</span>
       </div>
 
+      <p class="hero-sub">
+        PHP / Laravel・Vue.js を中心に、<br class="sp" />フロント〜バック幅広く対応できる Web エンジニア。
+      </p>
+
       <div class="hero-cta">
-        <a href="#works" class="btn-primary glow-cyan" @click.prevent="$el.ownerDocument.getElementById('works')?.scrollIntoView({ behavior: 'smooth' })">
+        <button class="btn btn-filled" @click="$el.ownerDocument.getElementById('works')?.scrollIntoView({behavior:'smooth'})">
           Works を見る
-        </a>
-        <a href="#contact" class="btn-outline" @click.prevent="$el.ownerDocument.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })">
-          連絡する
-        </a>
+        </button>
+        <button class="btn btn-ghost" @click="$el.ownerDocument.getElementById('contact')?.scrollIntoView({behavior:'smooth'})">
+          Contact
+        </button>
       </div>
     </div>
 
-    <!-- Scroll hint -->
-    <div class="scroll-hint">
-      <span class="scroll-hint-text">scroll</span>
-      <div class="scroll-hint-line" />
+    <!-- Scroll indicator -->
+    <div class="scroll-ind">
+      <span>scroll</span>
+      <div class="scroll-line" />
     </div>
   </section>
 </template>
 
 <style scoped>
-.hero-section {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.hero {
+  background: linear-gradient(145deg, #f0f9ff 0%, #faf5ff 60%, #f8fafc 100%);
   overflow: hidden;
-  /* dot grid */
-  background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px);
-  background-size: 32px 32px;
 }
 
 .blob {
   position: absolute;
-  width: 22rem;
-  height: 22rem;
   border-radius: 50%;
-  filter: blur(5rem);
-  opacity: 0.15;
+  filter: blur(60px);
   pointer-events: none;
+  opacity: 0.45;
 }
+.b1 { width: 350px; height: 350px; background: #bae6fd; top: -80px; right: -60px; }
+.b2 { width: 280px; height: 280px; background: #ddd6fe; bottom: -60px; left: -40px; }
 
-.blob-cyan {
-  top: 20%;
-  left: 20%;
-  background: radial-gradient(circle, #06b6d4, transparent);
-}
-
-.blob-violet {
-  bottom: 20%;
-  right: 20%;
-  background: radial-gradient(circle, #7c3aed, transparent);
-}
-
-.hero-content {
+.hero-body {
   position: relative;
-  z-index: 10;
-  padding: 0 1rem;
-  max-width: 48rem;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1.25rem;
+  max-width: 620px;
   width: 100%;
 }
 
-.hero-eyebrow {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #06b6d4;
-  margin-bottom: 1.25rem;
-}
-
 .hero-name {
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.15;
-  color: #f1f5f9;
-  margin-bottom: 1.5rem;
+  font-size: clamp(2.2rem, 6vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text);
+  margin: 0 0 1rem;
 }
 
-.hero-role-wrap {
-  height: 2.25rem;
+.hero-role-row {
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .hero-role {
-  font-size: clamp(1rem, 3vw, 1.375rem);
-  font-weight: 500;
-  color: #22d3ee;
-  text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  font-weight: 600;
+  color: var(--cyan);
 }
+
+.hero-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0 0 2rem;
+}
+
+.sp { display: none; }
+@media (max-width: 480px) { .sp { display: inline; } }
 
 .hero-cta {
   display: flex;
-  flex-direction: column;
-  gap: 0.875rem;
-  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-@media (min-width: 480px) {
-  .hero-cta {
-    flex-direction: row;
-    justify-content: center;
-  }
-}
-
-.scroll-hint {
+.scroll-ind {
   position: absolute;
-  bottom: 2.5rem;
+  bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  color: #475569;
-}
-
-.scroll-hint-text {
-  font-size: 0.7rem;
+  gap: 6px;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
+  color: #94a3b8;
 }
 
-.scroll-hint-line {
+.scroll-line {
   width: 1px;
-  height: 2.5rem;
-  background: linear-gradient(to bottom, #475569, transparent);
-  animation: bounce-line 1.5s ease-in-out infinite;
+  height: 2rem;
+  background: linear-gradient(to bottom, #94a3b8, transparent);
+  animation: pulse-down 1.4s ease-in-out infinite;
 }
 
-@keyframes bounce-line {
-  0%, 100% { transform: scaleY(1); opacity: 0.6; }
-  50% { transform: scaleY(0.7); opacity: 1; }
+@keyframes pulse-down {
+  0%, 100% { opacity: 0.5; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(0.75); }
 }
 </style>

@@ -1,200 +1,195 @@
-/* Google Fonts are loaded in nuxt.config.ts head */
-
-/* ── CSS Variables ─────────────────────────────────────── */
+/* ── Variables ─────────────────────────────────────────── */
 :root {
-  --bg-start: #0f0f1a;
-  --bg-end: #1a1a2e;
-  --accent-cyan: #06b6d4;
-  --accent-violet: #7c3aed;
-  --text-primary: #f1f5f9;
-  --text-muted: #94a3b8;
+  --nav-h: 60px;
+  --cyan: #0891b2;
+  --cyan-light: #cffafe;
+  --violet: #6d28d9;
+  --violet-light: #ede9fe;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --surface: #ffffff;
+  --bg: #f8fafc;
 }
 
-/* ── Base ──────────────────────────────────────────────── */
+/* ── Reset / Base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
 html {
-  scroll-behavior: smooth;
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  /* フルページスクロールスナップ */
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--nav-h);
+  overflow-y: scroll;
+  /* スムーズスクロールは JS 側で制御するため外す（snap と干渉回避） */
 }
 
 body {
-  font-family: 'Inter', 'Noto Sans JP', sans-serif;
-  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
-  background-attachment: fixed;
-  color: var(--text-primary);
-  min-height: 100vh;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* ── Glass Morphism ────────────────────────────────────── */
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* ── Full-page section ─────────────────────────────────── */
+.page-section {
+  height: 100vh;
+  height: 100svh; /* mobile browser chrome 対応 */
+  scroll-snap-align: start;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: var(--nav-h);
 }
 
-.glass-hover {
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+/* ── Typography helpers ────────────────────────────────── */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.5rem;
 }
 
-.glass-hover:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(6, 182, 212, 0.3);
-  transform: translateY(-4px);
+.section-heading {
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
 }
 
-/* ── Text Gradient ─────────────────────────────────────── */
-.text-gradient {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+.section-divider {
+  width: 2.5rem;
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  margin: 0 0 2rem;
+}
+
+.text-accent {
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ── Glow Effects ──────────────────────────────────────── */
-.glow-cyan {
-  box-shadow:
-    0 0 20px rgba(6, 182, 212, 0.25),
-    0 0 60px rgba(6, 182, 212, 0.1);
+/* ── Card ──────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
 }
 
-.glow-violet {
-  box-shadow:
-    0 0 20px rgba(124, 58, 237, 0.25),
-    0 0 60px rgba(124, 58, 237, 0.1);
+.card-hover {
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
 }
 
-.glow-cyan-text {
-  text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+.card-hover:hover {
+  box-shadow: 0 4px 20px rgba(8, 145, 178, 0.12), 0 2px 6px rgba(0,0,0,0.06);
+  border-color: #a5f3fc;
+  transform: translateY(-3px);
 }
 
-/* ── Dot Grid Background ───────────────────────────────── */
-.dot-grid-bg {
-  background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px);
-  background-size: 32px 32px;
+/* ── Buttons ───────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-/* ── Hero Typing Cursor ────────────────────────────────── */
+.btn-filled {
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.25);
+}
+
+.btn-filled:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(8, 145, 178, 0.35);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--cyan);
+  border: 1.5px solid var(--cyan);
+}
+
+.btn-ghost:hover {
+  background: var(--cyan-light);
+  transform: translateY(-1px);
+}
+
+/* ── Tag pill ──────────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--cyan-light);
+  color: var(--cyan);
+  border: 1px solid #a5f3fc;
+}
+
+/* ── Skill dot-pill ────────────────────────────────────── */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: border-color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.skill-pill:hover {
+  border-color: #a5f3fc;
+  background: #f0fdfe;
+}
+
+.skill-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Typing cursor ─────────────────────────────────────── */
 .typing-cursor::after {
   content: '|';
   animation: blink 1s step-end infinite;
-  color: var(--accent-cyan);
-  margin-left: 2px;
+  color: var(--cyan);
+  margin-left: 1px;
 }
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* ── Section spacing ───────────────────────────────────── */
-.section {
-  padding: 5rem 0;
-}
-
-.section-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.section-line {
-  width: 3rem;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
-  border-radius: 9999px;
-  margin: 0 auto 3rem;
-}
-
-/* ── Tag Badge ─────────────────────────────────────────── */
-.tag-badge {
-  display: inline-block;
-  padding: 0.2rem 0.65rem;
-  border-radius: 9999px;
-  font-size: 0.7rem;
-  font-weight: 500;
-  background: rgba(6, 182, 212, 0.15);
-  color: var(--accent-cyan);
-  border: 1px solid rgba(6, 182, 212, 0.3);
-}
-
-/* ── Timeline ──────────────────────────────────────────── */
-.timeline-line {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-violet));
-}
-
-.timeline-dot {
-  position: absolute;
-  left: -6px;
-  top: 1.5rem;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
-}
-
-/* ── Nav ───────────────────────────────────────────────── */
-.nav-link-active {
-  color: var(--accent-cyan) !important;
+  50%       { opacity: 0; }
 }
 
 /* ── Scrollbar ─────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-start);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent-violet);
-  border-radius: 3px;
-}
-
-/* ── Button ────────────────────────────────────────────── */
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
-  color: white;
-  padding: 0.625rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  display: inline-block;
-  text-decoration: none;
-}
-
-.btn-primary:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-}
-
-.btn-outline {
-  border: 1px solid var(--accent-cyan);
-  color: var(--accent-cyan);
-  padding: 0.625rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: background 0.2s ease, transform 0.2s ease;
-  display: inline-block;
-  text-decoration: none;
-}
-
-.btn-outline:hover {
-  background: rgba(6, 182, 212, 0.1);
-  transform: translateY(-2px);
-}
-
-/* ── Responsive helpers ────────────────────────────────── */
-@media (max-width: 768px) {
-  .section {
-    padding: 3.5rem 0;
-  }
-  .section-line {
-    margin-bottom: 2rem;
-  }
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 9px; }

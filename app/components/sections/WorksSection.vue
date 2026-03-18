@@ -1,37 +1,25 @@
 <script setup lang="ts">
-interface Work {
-  title: string
-  description: string
-  accent: string
-  tags: string[]
-  url?: string
-  github?: string
-}
-
-const works: Work[] = [
+const works = [
   {
     title: '映画ランキング',
-    description:
-      '映画をランキング形式で管理・共有できる Web アプリ。Laravel を使ったフルスタック構成で CRUD 機能を実装。',
-    accent: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
-    tags: ['PHP', 'Laravel', 'MySQL', 'Bootstrap'],
+    desc: 'Laravel を使ったフルスタック構成で映画をランキング管理・共有できる Web アプリ。CRUD 機能を実装。',
+    accent: ['#ff6b6b', '#ee5a24'],
+    tags: ['PHP', 'Laravel', 'MySQL'],
     url: 'http://movieranking-laravel.herokuapp.com/',
   },
   {
     title: 'なぞなぞアプリ',
-    description:
-      'ブラウザで遊べるなぞなぞクイズアプリ。JavaScript でランダム出題・正誤判定・スコア集計を実装。',
-    accent: 'linear-gradient(135deg, #f7df1e, #f0932b)',
+    desc: 'JavaScript でランダム出題・正誤判定・スコア集計を実装したブラウザクイズアプリ。',
+    accent: ['#0891b2', '#6d28d9'],
     tags: ['JavaScript', 'HTML', 'CSS'],
     url: 'https://odahara178.github.io/nazonazo//',
     github: 'https://github.com/odahara178/nazonazo',
   },
   {
     title: '本棚アプリ',
-    description:
-      '読んだ本を記録・管理できる SPA。Vue.js を使い LocalStorage でデータを永続化。コンポーネント設計を意識して実装。',
-    accent: 'linear-gradient(135deg, #42b883, #0a7554)',
-    tags: ['Vue.js', 'JavaScript', 'CSS'],
+    desc: '読んだ本を記録・管理できる SPA。Vue.js + LocalStorage でデータ永続化、コンポーネント設計を意識。',
+    accent: ['#42b883', '#0a7554'],
+    tags: ['Vue.js', 'JavaScript'],
     url: 'https://odahara178.github.io/book-self/',
     github: 'https://github.com/odahara178/book-self',
   },
@@ -39,59 +27,36 @@ const works: Work[] = [
 </script>
 
 <template>
-  <section id="works" class="section">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-4">
-        <h2 class="section-title text-gradient">Works</h2>
+  <section id="works" class="page-section works">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visible="{ opacity: 1, y: 0, transition: { duration: 500 } }"
+      class="works-wrap"
+    >
+      <div class="works-header">
+        <p class="section-label">Works</p>
+        <h2 class="section-heading">Projects</h2>
+        <div class="section-divider" />
       </div>
-      <div class="section-line" />
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          v-for="(work, i) in works"
-          :key="work.title"
-          v-motion
-          :initial="{ opacity: 0, y: 30 }"
-          :visible="{ opacity: 1, y: 0, transition: { duration: 500, delay: i * 120 } }"
-          class="works-card"
-        >
-          <!-- Color band header -->
-          <div class="works-band" :style="{ background: work.accent }">
-            <span class="works-title-overlay">{{ work.title }}</span>
+      <div class="works-grid">
+        <div v-for="w in works" :key="w.title" class="card card-hover w-card">
+          <!-- Color band -->
+          <div class="w-band" :style="{ background: `linear-gradient(135deg, ${w.accent[0]}, ${w.accent[1]})` }">
+            <span class="w-band-title">{{ w.title }}</span>
           </div>
-
-          <!-- Content -->
-          <div class="works-body">
-            <h3 class="text-base font-bold text-white mb-2">{{ work.title }}</h3>
-            <p class="text-sm text-slate-400 leading-relaxed mb-4">{{ work.description }}</p>
-
-            <!-- Tags -->
-            <div class="flex flex-wrap gap-1.5 mb-4">
-              <span v-for="tag in work.tags" :key="tag" class="tag-badge">{{ tag }}</span>
+          <!-- Body -->
+          <div class="w-body">
+            <p class="w-desc">{{ w.desc }}</p>
+            <div class="w-tags">
+              <span v-for="t in w.tags" :key="t" class="tag">{{ t }}</span>
             </div>
-
-            <!-- Links -->
-            <div class="flex gap-2">
-              <a
-                v-if="work.url"
-                :href="work.url"
-                target="_blank"
-                rel="noopener"
-                class="btn-primary text-sm flex-1 text-center"
-              >
-                サイトを見る
+            <div class="w-links">
+              <a v-if="w.url" :href="w.url" target="_blank" rel="noopener" class="btn btn-filled w-btn">
+                サイトへ
               </a>
-              <a
-                v-if="work.github"
-                :href="work.github"
-                target="_blank"
-                rel="noopener"
-                class="btn-outline text-sm px-3 flex items-center gap-1.5"
-                aria-label="GitHub"
-              >
-                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
+              <a v-if="w.github" :href="w.github" target="_blank" rel="noopener" class="btn btn-ghost w-btn">
                 Code
               </a>
             </div>
@@ -103,43 +68,66 @@ const works: Work[] = [
 </template>
 
 <style scoped>
-.works-card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+.works { background: var(--bg); }
+
+.works-wrap {
+  width: 100%;
+  max-width: 980px;
+  padding: 0 1.25rem;
 }
 
-.works-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(6, 182, 212, 0.3);
+.works-header { margin-bottom: 1.5rem; }
+
+.works-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
-.works-band {
-  height: 7rem;
+@media (min-width: 540px) {
+  .works-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .works-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.w-card { overflow: hidden; display: flex; flex-direction: column; }
+
+.w-band {
+  height: 5.5rem;
   display: flex;
   align-items: flex-end;
-  padding: 1rem 1.25rem;
-  position: relative;
+  padding: 0.75rem 1rem;
   flex-shrink: 0;
 }
 
-.works-title-overlay {
-  font-size: 1.125rem;
+.w-band-title {
+  font-size: 1rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.25);
 }
 
-.works-body {
-  padding: 1.25rem;
+.w-body {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 0.75rem;
 }
+
+.w-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.w-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.w-links { display: flex; gap: 0.5rem; }
+
+.w-btn { padding: 0.45rem 0.9rem; font-size: 0.8rem; }
 </style>

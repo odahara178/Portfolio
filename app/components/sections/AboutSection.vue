@@ -3,83 +3,57 @@ const socials = [
   {
     label: 'GitHub',
     href: 'https://github.com/odahara178',
-    svg: `<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>`,
+    svg: `<svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>`,
   },
   {
     label: 'Email',
     href: 'mailto:odahara178@gmail.com',
-    svg: `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
+    svg: `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
   },
 ]
 </script>
 
 <template>
-  <section id="about" class="section">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-4">
-        <h2 class="section-title text-gradient">About Me</h2>
+  <section id="about" class="page-section about">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visible="{ opacity: 1, y: 0, transition: { duration: 500 } }"
+      class="about-wrap"
+    >
+      <div class="about-header">
+        <p class="section-label">About</p>
+        <h2 class="section-heading">About Me</h2>
+        <div class="section-divider" />
       </div>
-      <div class="section-line" />
 
-      <div
-        v-motion
-        :initial="{ opacity: 0, y: 30 }"
-        :visible="{ opacity: 1, y: 0, transition: { duration: 600 } }"
-        class="about-card"
-      >
-        <!-- Left column: avatar + socials -->
+      <div class="about-body">
+        <!-- Left -->
         <div class="about-left">
-          <!-- Avatar circle (CSS only) -->
-          <div class="avatar-circle">
-            <span class="avatar-initials">H.O</span>
+          <div class="avatar">
+            <span class="avatar-text">H.O</span>
           </div>
-
-          <!-- Social links -->
-          <div class="social-links">
-            <a
-              v-for="s in socials"
-              :key="s.label"
-              :href="s.href"
-              :aria-label="s.label"
-              target="_blank"
-              rel="noopener"
-              class="social-btn"
-              v-html="s.svg"
-            />
+          <div class="socials">
+            <a v-for="s in socials" :key="s.label" :href="s.href" :aria-label="s.label"
+               target="_blank" rel="noopener" class="social-btn" v-html="s.svg" />
           </div>
         </div>
 
-        <!-- Right column: text -->
+        <!-- Right -->
         <div class="about-right">
-          <h3 class="text-2xl font-bold text-white mb-4">Hiromu Odahara</h3>
-          <div class="about-text">
-            <p>
-              はじめまして。小田原 宏夢（おだはら ひろむ）と申します。
-              Web エンジニアとして、フロントエンドからバックエンドまで幅広く経験しています。
-            </p>
-            <p>
-              PHP / Laravel によるサーバーサイド開発を得意とし、
-              Vue.js を用いたインタラクティブな UI 実装も経験があります。
-            </p>
-            <p>
-              現在はよりモダンなフロントエンド技術（Nuxt / TypeScript / Tailwind CSS）の習得に注力中です。
-            </p>
-          </div>
+          <h3 class="about-name">Hiromu Odahara</h3>
+          <p class="about-desc">
+            PHP / Laravel を中心としたバックエンド開発と、Vue.js を使ったフロントエンド実装の両面を経験したWeb エンジニアです。
+            要件定義から設計・実装・テストまで一貫して担当してきました。
+          </p>
+          <p class="about-desc">
+            現在はより現代的なフロントエンド技術（Nuxt / TypeScript / Tailwind CSS）の習得に注力中です。
+          </p>
 
-          <!-- Stats -->
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-num cyan">5+</div>
-              <div class="stat-label">Years Exp.</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num violet">10+</div>
-              <div class="stat-label">Projects</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num cyan">∞</div>
-              <div class="stat-label">Curiosity</div>
-            </div>
+          <div class="stats">
+            <div class="stat"><span class="stat-num cyan">5+</span><span class="stat-lbl">Years Exp.</span></div>
+            <div class="stat"><span class="stat-num violet">10+</span><span class="stat-lbl">Projects</span></div>
+            <div class="stat"><span class="stat-num cyan">∞</span><span class="stat-lbl">Curiosity</span></div>
           </div>
         </div>
       </div>
@@ -88,118 +62,107 @@ const socials = [
 </template>
 
 <style scoped>
-.about-card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.25rem;
-  padding: 2rem;
+.about { background: var(--surface); }
+
+.about-wrap {
+  width: 100%;
+  max-width: 860px;
+  padding: 0 1.25rem;
+}
+
+.about-header { margin-bottom: 1.5rem; }
+
+.about-body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-@media (min-width: 768px) {
-  .about-card {
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 3rem;
-  }
+@media (min-width: 640px) {
+  .about-body { flex-direction: row; align-items: flex-start; gap: 2.5rem; }
 }
 
 .about-left {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-shrink: 0;
 }
 
-.avatar-circle {
-  width: 9rem;
-  height: 9rem;
+.avatar {
+  width: 7rem;
+  height: 7rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #06b6d4, #7c3aed);
+  background: linear-gradient(135deg, #bae6fd, #ddd6fe);
+  border: 3px solid #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 30px rgba(6, 182, 212, 0.25), 0 0 60px rgba(6, 182, 212, 0.1);
 }
 
-.avatar-initials {
-  font-size: 2rem;
-  font-weight: 700;
-  color: white;
-  letter-spacing: 0.05em;
+.avatar-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #0891b2, #6d28d9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.social-links {
-  display: flex;
-  gap: 0.75rem;
-}
+.socials { display: flex; gap: 0.5rem; }
 
 .social-btn {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
-  transition: color 0.2s ease, background 0.2s ease;
+  color: #64748b;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
   text-decoration: none;
 }
 
-.social-btn:hover {
-  color: #06b6d4;
-  background: rgba(6, 182, 212, 0.1);
+.social-btn:hover { color: #0891b2; border-color: #a5f3fc; background: #f0fdfe; }
+
+.about-right { flex: 1; min-width: 0; }
+
+.about-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 0.75rem;
 }
 
-.about-right {
+.about-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0 0 0.6rem;
+}
+
+.stats {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.stat {
   flex: 1;
-  min-width: 0;
-}
-
-.about-text {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  color: #94a3b8;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-}
-
-.stat-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
-  padding: 0.875rem 0.5rem;
-  text-align: center;
+  background: var(--bg);
 }
 
-.stat-num {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.stat-num.cyan { color: #06b6d4; }
-.stat-num.violet { color: #7c3aed; }
-
-.stat-label {
-  font-size: 0.7rem;
-  color: #64748b;
-  margin-top: 0.25rem;
-}
+.stat-num { font-size: 1.4rem; font-weight: 800; line-height: 1; }
+.stat-num.cyan   { color: #0891b2; }
+.stat-num.violet { color: #6d28d9; }
+.stat-lbl { font-size: 0.68rem; color: #94a3b8; margin-top: 0.2rem; }
 </style>
