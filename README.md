@@ -3,6 +3,12 @@
 ダーク・テック系のモダンポートフォリオサイト。
 Nuxt 4 + TypeScript + Tailwind CSS v4 + Nuxt UI v3 で構築。
 
+次にやること（コンテンツ更新）
+
+  1. app/data/career.ts — 実際の職歴に修正
+  2. app/components/sections/AboutSection.vue — 自己紹介文・Stats の数値を修正
+  3. app/data/works.ts — Works の URL が有効か確認・追加
+
 ---
 
 ## 目次

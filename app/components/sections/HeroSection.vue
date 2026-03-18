@@ -13,7 +13,6 @@ const isDeleting = ref(false)
 
 function typeRole() {
   const current = roles[roleIndex.value]!
-
   if (!isDeleting.value) {
     displayedRole.value = current.slice(0, charIndex.value + 1)
     charIndex.value++
@@ -30,73 +29,171 @@ function typeRole() {
       roleIndex.value = (roleIndex.value + 1) % roles.length
     }
   }
-
-  const speed = isDeleting.value ? 60 : 100
-  setTimeout(typeRole, speed)
+  setTimeout(typeRole, isDeleting.value ? 60 : 100)
 }
 
-onMounted(() => {
-  setTimeout(typeRole, 800)
-})
-
-function scrollToWorks() {
-  document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' })
-}
-
-function scrollToContact() {
-  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-}
+onMounted(() => setTimeout(typeRole, 800))
 </script>
 
 <template>
-  <section
-    id="home"
-    class="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden dot-grid-bg"
-  >
-    <!-- Background glow blobs -->
-    <div
-      class="absolute top-1/4 left-1/4 w-72 h-72 rounded-full blur-3xl opacity-20 pointer-events-none"
-      style="background: radial-gradient(circle, #06b6d4, transparent)"
-    />
-    <div
-      class="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full blur-3xl opacity-20 pointer-events-none"
-      style="background: radial-gradient(circle, #7c3aed, transparent)"
-    />
+  <section id="home" class="hero-section">
+    <!-- Glow blobs -->
+    <div class="blob blob-cyan" />
+    <div class="blob blob-violet" />
 
     <!-- Content -->
     <div
       v-motion
       :initial="{ opacity: 0, y: 40 }"
       :enter="{ opacity: 1, y: 0, transition: { duration: 700 } }"
-      class="relative z-10 px-4 max-w-3xl mx-auto"
+      class="hero-content"
     >
-      <p class="text-sm font-medium tracking-widest text-cyan-400 uppercase mb-4">
-        Welcome to my Portfolio
-      </p>
+      <p class="hero-eyebrow">Welcome to my Portfolio</p>
 
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
+      <h1 class="hero-name">
         Hiromu<br />
         <span class="text-gradient">Odahara</span>
       </h1>
 
-      <div class="text-lg sm:text-xl md:text-2xl text-slate-300 font-light mb-10 h-8">
-        <span class="typing-cursor glow-cyan-text text-cyan-300 font-medium">{{ displayedRole }}</span>
+      <div class="hero-role-wrap">
+        <span class="hero-role typing-cursor">{{ displayedRole }}</span>
       </div>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button class="btn-primary glow-cyan" @click="scrollToWorks">
+      <div class="hero-cta">
+        <a href="#works" class="btn-primary glow-cyan" @click.prevent="$el.ownerDocument.getElementById('works')?.scrollIntoView({ behavior: 'smooth' })">
           Works を見る
-        </button>
-        <button class="btn-outline" @click="scrollToContact">
+        </a>
+        <a href="#contact" class="btn-outline" @click.prevent="$el.ownerDocument.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })">
           連絡する
-        </button>
+        </a>
       </div>
     </div>
 
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 text-xs">
-      <span>scroll</span>
-      <div class="w-px h-10 bg-gradient-to-b from-slate-500 to-transparent animate-bounce" />
+    <!-- Scroll hint -->
+    <div class="scroll-hint">
+      <span class="scroll-hint-text">scroll</span>
+      <div class="scroll-hint-line" />
     </div>
   </section>
 </template>
+
+<style scoped>
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  /* dot grid */
+  background-image: radial-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.blob {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 50%;
+  filter: blur(5rem);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.blob-cyan {
+  top: 20%;
+  left: 20%;
+  background: radial-gradient(circle, #06b6d4, transparent);
+}
+
+.blob-violet {
+  bottom: 20%;
+  right: 20%;
+  background: radial-gradient(circle, #7c3aed, transparent);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  padding: 0 1rem;
+  max-width: 48rem;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #06b6d4;
+  margin-bottom: 1.25rem;
+}
+
+.hero-name {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #f1f5f9;
+  margin-bottom: 1.5rem;
+}
+
+.hero-role-wrap {
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.hero-role {
+  font-size: clamp(1rem, 3vw, 1.375rem);
+  font-weight: 500;
+  color: #22d3ee;
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+.hero-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  align-items: center;
+}
+
+@media (min-width: 480px) {
+  .hero-cta {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #475569;
+}
+
+.scroll-hint-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+.scroll-hint-line {
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(to bottom, #475569, transparent);
+  animation: bounce-line 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce-line {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(0.7); opacity: 1; }
+}
+</style>
