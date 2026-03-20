@@ -60,7 +60,7 @@ npm run dev
 npm run deploy
 
 # プロジェクトページ（/Portfolio/）にデプロイ
-NUXT_APP_BASE_URL=/Portfolio/ npm run deploy
+$env:NUXT_APP_BASE_URL="/Portfolio/"; npm run deploy
 ```
 
 ### サイトを更新する（2回目以降）
@@ -73,7 +73,7 @@ npm run dev
 # 3. デプロイ（ビルド → GitHub Pages へ自動アップロード）
 npm run deploy
 # または
-NUXT_APP_BASE_URL=/Portfolio/ npm run deploy
+$env:NUXT_APP_BASE_URL="/Portfolio/"; npm run deploy
 ```
 
 数分後に GitHub Pages が反映されます。リポジトリの Actions タブで進捗を確認できます。

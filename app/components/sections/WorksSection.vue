@@ -1,5 +1,33 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
 import { works } from '~/data/works'
+
+const slider = ref<HTMLElement>()
+const current = ref(0)
+
+function slideTo(index: number) {
+  if (!slider.value) return
+  const card = slider.value.querySelectorAll('.w-card')[index] as HTMLElement
+  card?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+  current.value = index
+}
+
+function slide(dir: 'prev' | 'next') {
+  const next = dir === 'next'
+    ? Math.min(current.value + 1, works.length - 1)
+    : Math.max(current.value - 1, 0)
+  slideTo(next)
+}
+
+function onScroll() {
+  if (!slider.value) return
+  const scrollLeft = slider.value.scrollLeft
+  const cardWidth = (slider.value.querySelector('.w-card') as HTMLElement)?.offsetWidth ?? 1
+  current.value = Math.round(scrollLeft / (cardWidth + 24))
+}
+
+onMounted(() => slider.value?.addEventListener('scroll', onScroll, { passive: true }))
+onUnmounted(() => slider.value?.removeEventListener('scroll', onScroll))
 </script>
 
 <template>
@@ -16,7 +44,7 @@ import { works } from '~/data/works'
         <div class="section-divider" />
       </div>
 
-      <div class="works-grid">
+      <div ref="slider" class="works-slider">
         <div v-for="w in works" :key="w.title" class="card card-hover w-card">
           <div
             class="w-band"
@@ -40,6 +68,22 @@ import { works } from '~/data/works'
           </div>
         </div>
       </div>
+
+      <!-- ドットナビゲーション -->
+      <div class="slider-nav">
+        <button class="nav-arrow" aria-label="前へ" @click="slide('prev')">‹</button>
+        <div class="dots">
+          <button
+            v-for="(_, i) in works"
+            :key="i"
+            class="dot"
+            :class="{ active: current === i }"
+            :aria-label="`${i + 1}枚目`"
+            @click="slideTo(i)"
+          />
+        </div>
+        <button class="nav-arrow" aria-label="次へ" @click="slide('next')">›</button>
+      </div>
     </div>
   </section>
 </template>
@@ -49,22 +93,32 @@ import { works } from '~/data/works'
 
 .works-wrap {
   width: 100%;
-  max-width: 980px;
+  max-width: 1100px;
   padding: 0 1.25rem;
 }
 
 .works-header { margin-bottom: 1.5rem; }
 
-.works-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+/* ── スライダー本体 ── */
+.works-slider {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.5rem 0.25rem 0.75rem;
 }
+.works-slider::-webkit-scrollbar { display: none; }
 
-@media (min-width: 540px) { .works-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 900px) { .works-grid { grid-template-columns: repeat(3, 1fr); } }
-
-.w-card { overflow: hidden; display: flex; flex-direction: column; }
+/* ── カード ── */
+.w-card {
+  flex: 0 0 min(340px, 82vw);
+  scroll-snap-align: start;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
 .w-band {
   height: 5.5rem;
@@ -93,4 +147,57 @@ import { works } from '~/data/works'
 .w-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .w-links { display: flex; gap: 0.5rem; }
 .w-btn  { padding: 0.45rem 0.9rem; font-size: 0.8rem; }
+
+/* ── ドットナビゲーション ── */
+.slider-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--border);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s, width 0.2s;
+}
+
+.dot.active {
+  background: var(--cyan);
+  width: 22px;
+  border-radius: 9999px;
+  transform: none;
+}
+
+.nav-arrow {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.25rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.nav-arrow:hover {
+  border-color: var(--cyan);
+  background: var(--bg);
+}
 </style>
